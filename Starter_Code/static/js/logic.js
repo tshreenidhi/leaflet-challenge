@@ -69,6 +69,33 @@ let myMap = L.map("map", {
     layers: [street, earthquakes]
   });
 
+// Code to create the lagend
+let legend = L.control({
+  position: "bottomright"
+});
+
+legend.onAdd = function () {
+
+  let div = L.DomUtil.create("div", "maplegend")
+
+  let limits = [-10,10,30,50,70,90]
+  let colors = ["#00FF00", "greenyellow", "yellow", "orange" , "purple" , "red"]
+  
+  for (let i = 0; i < limits.length; i++){
+    if (i < limits.length - 1) {
+      div.innerHTML += "<i style='background-color:" + colors[i]  + "'></i>"
+      + limits[i] + "-" + limits[i+1] + "<br>"
+    } 
+    else {
+      div.innerHTML += "<i style='background-color:" + colors[i] +  "'></i>" + limits[i] + "+"
+    }
+    console.log(div.innerHTML);
+  }
+  return div;
+};
+
+legend.addTo(myMap);
+
   // Create a layer control. Pass it our baseMaps and overlayMaps. Add the layer control to the map.
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
